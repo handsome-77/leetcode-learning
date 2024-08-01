@@ -1,4 +1,5 @@
+.gitignore
 .settings
 \bin
 .classpath
-
+.project
