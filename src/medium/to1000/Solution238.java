@@ -1,4 +1,4 @@
-package medium.to100;
+package medium.to1000;
 
 public class Solution238 {
 

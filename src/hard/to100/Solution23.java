@@ -1,29 +1,51 @@
 package hard.to100;
 
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+import structure.ListNode;
+
 public class Solution23 {
+	
+	/**
+	 * v3.0
+	 * 优先级队列
+	 * 入队链表中的每个头结点，取出后再入队下一个结点
+	 * @param lists
+	 * @return
+	 */
+	public ListNode mergeKLists(ListNode[] lists) {
+		Queue<ListNode> queue = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
 
-	public class ListNode {
-		int val;
-		ListNode next;
-
-		ListNode() {
+			@Override
+			public int compare(ListNode o1, ListNode o2) {
+				return o1.val-o2.val;
+			}
+		});
+		
+		for(ListNode node : lists) {
+			if(node!=null) {
+				queue.offer(node);
+			}
 		}
-
-		ListNode(int val) {
-			this.val = val;
+		ListNode dump = new ListNode();
+		ListNode cur = dump;
+		while(!queue.isEmpty()) {
+			cur.next = queue.poll();
+			cur = cur.next;
+			if(cur.next!=null) {
+				queue.offer(cur.next);
+			}
 		}
-
-		ListNode(int val, ListNode next) {
-			this.val = val;
-			this.next = next;
-		}
+		return dump.next;
 	}
 	
 	/**
 	 * v2.0
 	 * 分治合并
 	 */
-    public ListNode mergeKLists(ListNode[] lists) {
+    public ListNode mergeKLists2(ListNode[] lists) {
         return merge(lists, 0, lists.length - 1);
     }
     public ListNode merge(ListNode[] lists, int l, int r) {
