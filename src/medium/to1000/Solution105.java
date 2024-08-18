@@ -2,32 +2,15 @@ package medium.to1000;
 
 import java.util.HashMap;
 
+import structure.TreeNode;
+
 public class Solution105 {
-
-	public class TreeNode {
-		int val;
-		TreeNode left;
-		TreeNode right;
-
-		TreeNode() {
-		}
-
-		TreeNode(int val) {
-			this.val = val;
-		}
-
-		TreeNode(int val, TreeNode left, TreeNode right) {
-			this.val = val;
-			this.left = left;
-			this.right = right;
-		}
-	}
-
+	
 	/**
 	 * v1.0
 	 * 递归
-	 * @param preorder
-	 * @param inorder
+	 * @param preorder 先序遍历序列
+	 * @param inorder 后序遍历序列
 	 * @return
 	 */
 	public TreeNode buildTree(int[] preorder, int[] inorder) {
@@ -48,8 +31,8 @@ public class Solution105 {
 		int rootInIdx = inorderMap.get(preorder[pleft]);
 //		存储根结点
 		TreeNode root = new TreeNode(preorder[pleft]);
-//		左子树节点数，中序遍历中左坐标到根节点坐标
-		int lenOfLeft = rootInIdx-pleft;
+//		左子树节点数，中序遍历左坐标到根节点坐标差
+		int lenOfLeft = rootInIdx-ileft;
 		root.left = buildRecur(preorder, pleft+1, pleft+lenOfLeft, inorderMap, ileft, rootInIdx-1);
 		root.right = buildRecur(preorder, pleft+lenOfLeft+1, pright, inorderMap, rootInIdx+1, iright);
 		return root;
