@@ -5,6 +5,12 @@ import java.util.List;
 
 public class Solution22 {
 
+	/**
+	 * v1.0
+	 * 回溯
+	 * @param n
+	 * @return
+	 */
 	public List<String> generateParenthesis(int n){
 		List<String> res = new ArrayList<String>();
 		backtrack(res, new StringBuilder(), 0, 0, n);

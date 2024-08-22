@@ -14,7 +14,46 @@ candidates 中的 同一个 数字可以 无限制重复被选取 。如果至�
 
 public class Solution39 {
 
+	/**
+	 * try-v1.0
+	 * 排序+回溯，剪枝
+	 * @param candidates
+	 * @param target
+	 * @return
+	 */
 	public List<List<Integer>> combinationSum(int[] candidates, int target){
+		List<List<Integer>> res = new ArrayList<>();
+		Arrays.sort(candidates);
+		backtrack(candidates, target, new ArrayList<>(), res, 0);
+		return res;
+	}
+	public void backtrack(int[] candidates, int target, 
+			List<Integer> combination, List<List<Integer>> res, int start) {
+		if(start==candidates.length) {
+			return;
+		}
+		if(target==0) {
+			res.add(new ArrayList<>(combination));
+			return;
+		}
+		for(int i=start; i<candidates.length; i++) {
+			if(target-candidates[i]<0) {
+				return;
+			}
+			combination.add(candidates[i]);
+			backtrack(candidates, target-candidates[i], combination, res, i);
+			combination.remove(combination.size()-1);
+		}
+	}
+	
+	/**
+	 * v1.0
+	 * 排序+回溯，剪枝
+	 * @param candidates
+	 * @param target
+	 * @return
+	 */
+	public List<List<Integer>> combinationSum1(int[] candidates, int target){
 		List<List<Integer>> res = new ArrayList<List<Integer>>();
 		Arrays.sort(candidates);
 		dfs(candidates, target, new ArrayList<Integer>(), res, 0);
@@ -28,6 +67,7 @@ public class Solution39 {
 		}
 		
 		for(int i=start; i<candidates.length; i++) {
+//			剪枝，因为已排序，如果加上后面的数，一定大于target
 			if(target-candidates[i] < 0) {
 				return;
 			}
